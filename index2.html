@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        input{
+            width: 30px;
+        }
+    </style>
+  </head>
+  <body>
+    <input type="number" class="hourstm">
+    <input type="number" class="minutestm">
+    <input type="number" class="secondtm">
+    <button id="start">start</button>
+    <button id="reset">reset</button>
+    <button id="stop">stop</button>
+    <div id="counter">0</div>
+    <script>
+         const hourstm =document.querySelector(".hourstm")
+        const minutestm =document.querySelector(".minutestm")
+        const secondtm =document.querySelector(".secondtm")
+      const start = document.getElementById("start");
+      const reset = document.getElementById("reset");
+      const stop = document.getElementById("stop");
+      const counter = document.getElementById("counter");
+      let count = 0;
+      let timer;
+      let isTimerCreated = false;
+
+      start.onclick = () => {
+        //eger ilk defe timer yaranmirsa yeni  deyer true dirse isleme
+        if (isTimerCreated) {
+          return;
+        }
+
+        timer = setInterval(() => {
+            
+            count--
+            // let hours = Math.floor(count / 3600);
+            // let minutes = Math.floor((count % 3600) / 60);
+            // let second = count % 60;
+            // var count = Date.parse(endtime) - Date.parse(new Date());
+            // var second = Math.floor( (count/1000) % 60 );  
+            // var minutes = Math.floor( (count/1000/60) % 60 );  
+            // var hours = Math.floor( (count/(1000*60*60)) % 24 ); 
+    //         const hours = count > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+    // const minutes = count > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+    // const seconds = count > 0 ? Math.floor(diff / 1000) % 60 : 0;
+    var t = Date.parse(hourstm.value) - Date.parse(new Date());
+  var second = Math.floor((count / 1000) % 60);
+  var minutes = Math.floor((count / 1000 / 60) % 60);
+  var hours = Math.floor((count / (1000 * 60 * 60)) % 24);
+  
+             hours=hourstm.value
+        //   counter.textContent = `0${hours}:0${minutes}:0${second}`;
+          if(second>9 && minutes<9){
+            counter.textContent = `0${hours}:0${minutes}:${second}`
+          }
+          else if(minutes>9 && second>9){
+            counter.textContent = `0${hours}:${minutes}:${second}`
+          }
+          else if(minutes>9 && second>9 && hours>9){
+            counter.textContent = `0${hours}:${minutes}:${second}`
+          }
+        }, 100);
+
+        isTimerCreated = true;
+      };
+
+      reset.onclick = () => {
+        clearInterval(timer);
+        isTimerCreated = false;
+        count = 0;
+        counter.textContent = count;
+      };
+
+      stop.onclick = () => {
+        clearInterval(timer);
+        isTimerCreated = false;
+      };
+    </script>
+  </body>
+</html>

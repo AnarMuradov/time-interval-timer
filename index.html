@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    
+    <button id="start">start</button>
+    <button id="reset">reset</button>
+    <button id="stop">stop</button>
+    <div id="counter">0</div>
+    <script>
+      const start = document.getElementById("start");
+      const reset = document.getElementById("reset");
+      const stop = document.getElementById("stop");
+      const counter = document.getElementById("counter");
+      let count = 0;
+      let timer;
+      let isTimerCreated = false;
+
+      start.onclick = () => {
+        //eger ilk defe timer yaranmirsa yeni  deyer true dirse isleme
+        if (isTimerCreated) {
+          return;
+        }
+
+        timer = setInterval(() => {
+          count++;
+          let hours = Math.floor(count / 3600);
+          let minutes = Math.floor((count % 3600) / 60);
+          let second = count % 60;
+        //   counter.textContent = `0${hours}:0${minutes}:0${second}`;
+          if(second>9 && minutes<9){
+            counter.textContent = `0${hours}:0${minutes}:${second}`
+          }
+          else if(minutes>9 && second>9){
+            counter.textContent = `0${hours}:${minutes}:${second}`
+          }
+          else if(minutes>9 && second>9 && hours>9){
+            counter.textContent = `0${hours}:${minutes}:${second}`
+          }
+        }, 10);
+
+        isTimerCreated = true;
+      };
+
+      reset.onclick = () => {
+        clearInterval(timer);
+        isTimerCreated = false;
+        count = 0;
+        counter.textContent = count;
+      };
+
+      stop.onclick = () => {
+        clearInterval(timer);
+        isTimerCreated = false;
+      };
+    </script>
+  </body>
+</html>
